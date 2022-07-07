@@ -1,0 +1,13 @@
+---
+# tasks file for update_hostfile
+ - name: Add master and worker nodes to host file
+   blockinfile:
+     path: /etc/hosts
+     block: |
+            {{ item.ip }} {{ item.name }}
+     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
+   loop:
+     - {name: master, ip: 192.168.50.2 }
+     - {name: worker1, ip: 192.168.50.3 }
+     - {name: worker2, ip: 192.168.50.4 }
+

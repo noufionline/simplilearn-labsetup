@@ -1,0 +1,20 @@
+---
+# tasks file for setup_ssh
+ - name: Set authorized key taken from file
+   copy:
+     src: "/home/noufal/devops/linux/test/ansiuser/"
+     dest: "/home/ansiuser/.ssh/"
+     group: ansiuser
+     owner: ansiuser
+     mode: "0600"
+   when: ansible_hostname == "master"
+
+ - name: Set authorized key taken from file
+   authorized_key:
+     user: ansiuser
+     state: "{{ state | default('present') }}"
+     manage_dir: yes
+     key: "{{ lookup('file', '/home/noufal/devops/linux/test/ansiuser/id_rsa.pub') }}"
+   when: ansible_hostname != "master"
+
+

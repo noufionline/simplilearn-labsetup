@@ -1,0 +1,28 @@
+---
+# tasks file for setup_ansible
+- name: Create ansible config file
+  copy:
+    dest: "/home/ansiuser/ansible.cfg"
+    content: "{{ config_text }}" 
+  when: ansible_hostname == "master"
+
+- name: Create Inventory file
+  copy:
+    dest: /home/ansiuser/inventory
+    content: "{{ inventory_text }}"
+  when: ansible_hostname == "master"
+
+- name: add ansible repository
+  apt_repository:
+    repo: "ppa:ansible/ansible"
+    update_cache: yes
+  when: ansible_hostname == "master"
+
+- name: install ansible
+  apt:
+    name: "{{ item }}"
+  loop:
+    - software-properties-common
+    - ansible
+  when: ansible_hostname == "master"
+

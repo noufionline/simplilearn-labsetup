@@ -1,0 +1,7 @@
+---
+# handlers file for create_previlaged_ansiuser
+- name: restart_sshd
+  service:
+    name: sshd
+    state: restarted
+

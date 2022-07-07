@@ -1,0 +1,9 @@
+---
+ - name: Setup Lab
+   hosts: all
+   become: yes
+   roles:
+    - update_hostfile
+    - create_previlaged_ansiuser
+    - setup_ssh
+    - setup_ansible

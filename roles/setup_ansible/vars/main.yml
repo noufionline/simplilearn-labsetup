@@ -1,0 +1,12 @@
+---
+# vars file for setup_ansible
+ config_text: |
+  [defaults]
+  inventory=./inventory
+  host_key_checking=False
+
+ inventory_text: |
+  [myinfra] 
+  worker1
+  worker2
+

@@ -1,0 +1,24 @@
+---
+# tasks file for create_previlaged_ansiuser
+ - name: Create ansiuser with root access
+   user:
+       name: ansiuser
+       shell: /bin/bash
+       state: present
+       password: "{{ 'ansiuser' | password_hash('sha512') }}"
+       update_password: on_create
+
+ - name: Give sudo privilege to ansiuser
+   copy:
+       dest: /etc/sudoers.d/ansiuser 
+       content: "ansiuser ALL=(root) NOPASSWD: ALL"
+
+ - name: edit_sshd
+   lineinfile:
+       path: /etc/ssh/sshd_config
+       regexp: '^PasswordAuthentication'
+       line: 'PasswordAuthentication yes'
+       insertafter: '^PasswordAuthentication'
+       state: present
+   notify: restart_sshd
+
